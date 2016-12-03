@@ -1,1 +1,1 @@
-web: gunicorn app.motostrava:app
+web: python app/hello.py
