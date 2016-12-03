@@ -1,1 +1,1 @@
-web: python app/hello.py
+web: gunicorn --pythonpath app app:app --bind="0.0.0.0:$PORT
