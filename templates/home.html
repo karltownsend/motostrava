@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <body>
+{% extends "layout.html" %}
+{% block content %}
+  <div class="home">
+    <h1>Welcome to MotoStrava!</h1>
+    <p>The place to analyze your laps and find that extra time!</p>
+    <p>
+    <div>
+    <p>Upload LapTimer .csv file here:</p>  
+    <form action="upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file"><br /><br />
+        <input type="submit" value="Upload">
+    </form>  
+  </div>
+{% endblock %}
+  </body>
+</html>
