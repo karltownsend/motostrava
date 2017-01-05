@@ -28,12 +28,14 @@ def get_lap_times(data):
            # easy enough to adjust time, but this might indicate other errors
        lap_list.append([lap, data[n]['time_lap'][-1]])  # last element is [-1], the final time
    return lap_list
-      
-#@app.template_filter()
-def datetimefilter(value, format='%02M:%02S'):
-#  convert a datetime to a different format
-    return value.strftime(format)
-app.jinja_env.filters['datetimefilter'] = datetimefilter
+     
+# format the laptime in m:ss
+@app.context_processor
+def utility_processor():
+	def format_lap(seconds):
+		m, s = divmod(seconds, 60)
+		return "%01d:%05.2f" % (m,s)
+	return dict(format_lap=format_lap)
           
 @app.route('/')
 def home():
@@ -80,8 +82,7 @@ def uploaded_file(filename):
 	lines_to_skip = 1		# first line in the header is the title, not for processing
 	data = np.recfromcsv(app.config['UPLOAD_FOLDER']+filename, delimiter=',', skip_header=lines_to_skip)
 	lap_times = get_lap_times(data)    # list is [[lap num,time], ...]  unsorted
-	lap_times_sorted = sorted(lap_times, key=lambda t: t[1])   # lap times from fastest to slowest
-#	print lap_times_sorted[0]     # show the fastest [lap#, time]        
+	lap_times_sorted = sorted(lap_times, key=lambda t: t[1])   # lap times from fastest to slowest       
 	return render_template('laptimes.html', data=data, lap_times=lap_times, lap_times_sorted=lap_times_sorted)
     
 @app.route('/form')

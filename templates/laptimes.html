@@ -6,13 +6,13 @@
 
 <p><h1>Lap Times</h1></p>
 {% for row in lap_times %}
-Lap {{ row[0] }}:  {{ row[1] | datetimefilter }}<p>
-{% endfor %}
+Lap {{ row[0] }}:   {{ format_lap(row[1]) }}<p>
+{%    endfor %}
 <p>
 
 <p><h1>Sorted Lap Times</h1></p>
 {% for row in lap_times_sorted %}
-Lap {{ row[0] }}:  {{ row[1] }}<p>
+Lap {{ row[0] }}:   {{ format_lap(row[1]) }}<p>
 {% endfor %}
 <p>
 
